@@ -240,11 +240,16 @@ def render_result_card(result: ResumeEvaluation):
 
     col1, col2 = st.columns([1, 1])
     with col1:
-        st.plotly_chart(make_gauge(result.match_score), use_container_width=True)
+        st.plotly_chart(
+            make_gauge(result.match_score),
+            width="stretch",
+            key=f"gauge_{result.candidate}",
+        )
     with col2:
         st.plotly_chart(
             make_skills_donut(len(result.matching_skills), len(result.missing_skills)),
-            use_container_width=True,
+            width="stretch",
+            key=f"donut_{result.candidate}",
         )
         st.caption(f"{len(result.matching_skills)} matching · {len(result.missing_skills)} missing")
 
@@ -379,7 +384,7 @@ if mode == "Single / Compare":
         render_result_card(results[0])
     else:
         st.subheader("Score Comparison")
-        st.plotly_chart(make_ranking_bar(results), use_container_width=True)
+        st.plotly_chart(make_ranking_bar(results), width="stretch", key="ranking_bar")
         st.divider()
         for result in sorted(results, key=lambda r: r.match_score, reverse=True):
             render_result_card(result)
@@ -390,7 +395,7 @@ else:  # Best Candidate
         f"🏆 **Best Candidate: {best.candidate}** - Score {best.match_score}/100 ({best.recommendation})"
     )
     st.subheader("Ranking")
-    st.plotly_chart(make_ranking_bar(results), use_container_width=True)
+    st.plotly_chart(make_ranking_bar(results), width="stretch", key="ranking_bar")
     st.divider()
     for result in sorted(results, key=lambda r: r.match_score, reverse=True):
         render_result_card(result)
