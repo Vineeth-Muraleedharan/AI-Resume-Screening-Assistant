@@ -55,3 +55,91 @@ flowchart LR
 ---
 
 ## Project Structure
+
+AI-Resume-Screening-Assistant/
+├── app.py # Streamlit UI
+├── screener/
+│ ├── init.py
+│ ├── ingest.py # Load PDF/DOCX, chunk, tag with candidate/page
+│ ├── store.py # Embeddings + per-candidate FAISS retrieval
+│ ├── schema.py # Pydantic schema for evaluation output
+│ └── chain.py # Prompt template + LLM call + parsing
+├── .streamlit/
+│ └── config.toml # Theme config
+├── requirements.txt
+├── .gitignore
+└── README.md
+
+
+
+---
+
+## Setup & Installation
+
+**1. Clone the repo**
+```bash
+git clone https://github.com/Vineeth-Muraleedharan/AI-Resume-Screening-Assistant.git
+cd AI-Resume-Screening-Assistant
+```
+
+**2. Create a virtual environment**
+```bash
+conda create -n resume-screener python=3.12
+conda activate resume-screener
+```
+
+**3. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**4. Add your OpenAI API key**
+
+Create a `.env` file in the project root:
+
+OPENAI_API_KEY=your_key_here
+
+
+**5. Run the app**
+```bash
+streamlit run app.py
+```
+
+---
+
+## Usage
+
+1. Paste a job description into the **Job Description** box.
+2. Upload one or more resumes (PDF or DOCX) - up to 5 files.
+3. Choose a mode:
+   - **Single / Compare** - evaluate one resume, or compare several side by side
+   - **Best Candidate** - rank all uploaded resumes and highlight the top match
+4. Click **Run Evaluation**.
+
+Each result includes a match score gauge, a skill-coverage donut chart, matching/missing skills, strengths, weaknesses, and a justification grounded in the resume text.
+
+---
+
+## Testing
+
+The pipeline was validated using two resumes for the same person in different domains - Radiation Therapy (RTT) and Data Analytics (DA) - cross-tested against JDs from both fields:
+
+| Resume | RTT-focused JD | DA-focused JD |
+|---|---|---|
+| RTT resume | **95 - Strong Fit** | 10 - Not a Fit |
+| DA resume | 30 - Not a Fit | **85 - Strong Fit** |
+
+This confirms the system is genuinely JD-agnostic: each resume scores highly only against its own relevant domain, and the model correctly identifies partial overlaps (e.g., shared compliance knowledge) without inflating unrelated scores.
+
+---
+
+## Privacy Note
+
+Uploaded resumes are processed in memory for the current session only and sent to OpenAI for analysis. Nothing is saved to disk or persisted between sessions.
+
+---
+
+## Author
+
+**Vineeth Muraleedharan**
+GitHub: [@Vineeth-Muraleedharan](https://github.com/Vineeth-Muraleedharan)
