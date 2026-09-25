@@ -2,7 +2,7 @@
 
 An AI-powered resume screening tool that evaluates candidate resumes against any job description using **LangChain**, **Retrieval-Augmented Generation (RAG)**, and **Streamlit**. Built as part of the GenAI & Agentic AI coursework at IIT Guwahati.
 
-🔗 **Live App:** _[Add Streamlit Cloud link here]_
+🔗 **Live App:** _[https://ai-resume-screening-assistant-by-vineeth.streamlit.app/]_
 
 ---
 
@@ -56,20 +56,21 @@ flowchart LR
 
 ## Project Structure
 
+```
 AI-Resume-Screening-Assistant/
-├── app.py # Streamlit UI
+├── app.py                  # Streamlit UI
 ├── screener/
-│ ├── init.py
-│ ├── ingest.py # Load PDF/DOCX, chunk, tag with candidate/page
-│ ├── store.py # Embeddings + per-candidate FAISS retrieval
-│ ├── schema.py # Pydantic schema for evaluation output
-│ └── chain.py # Prompt template + LLM call + parsing
+│   ├── __init__.py
+│   ├── ingest.py            # Load PDF/DOCX, chunk, tag with candidate/page
+│   ├── store.py             # Embeddings + per-candidate FAISS retrieval
+│   ├── schema.py            # Pydantic schema for evaluation output
+│   └── chain.py             # Prompt template + LLM call + parsing
 ├── .streamlit/
-│ └── config.toml # Theme config
+│   └── config.toml          # Theme config
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-
+```
 
 
 ---
