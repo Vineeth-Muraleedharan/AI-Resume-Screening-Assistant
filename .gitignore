@@ -4,5 +4,3 @@ __pycache__/
 *.pyc
 sample_resumes/
 attachments (1).zip
-*.docx
-~$*
